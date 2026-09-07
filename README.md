@@ -1,8 +1,9 @@
 # maimai でらっくす レーティングチェッカー
 
-`maimai-rate-table.html` のピンク基調デザインを採用しています。
+maimai のベスト枠・新曲枠・候補枠のスコアを読み込んで、次の判定ランクまでの必要スコアとレート上昇量を一覧表示するWebツールです。
 
-単一の `index.html` で動作します。ブラウザで開くだけで使えます（サーバー不要）。
+- 🔗 **ツールを開く(GitHub Pages)**: https://odin3556.github.io/maimai-score-tool/
+- 📄 **ソースコード**: このリポジトリ自体です([index.html](index.html)が本体)
 
 ## 何ができるか
 
