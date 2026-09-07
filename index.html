@@ -149,10 +149,14 @@
   .goal-bar-wrap{height:8px;background:#f6e6ef;border-radius:5px;overflow:hidden;margin-top:8px;}
   .goal-bar{height:100%;background:linear-gradient(90deg,#ff9ec9,#e0407f);border-radius:5px;transition:width .3s;}
   .goal-songs{margin-top:12px;max-height:280px;overflow-y:auto;}
-  .goal-song-row{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #f6e6ef;font-size:12.5px;}
-  .goal-song-row .g-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .goal-song-row .g-num{font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;color:#6b7280;}
-  .goal-song-row .g-need{color:#c23b3b;font-weight:700;font-variant-numeric:tabular-nums;}
+  .goal-song-row{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid #f6e6ef;font-size:12.5px;}
+  .goal-song-row .g-main{flex:1;min-width:0;}
+  .goal-song-row .g-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;}
+  .goal-song-row .g-meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:3px;font-size:11px;color:#6b7280;}
+  .goal-song-row .g-meta .g-const{font-variant-numeric:tabular-nums;}
+  .goal-song-row .g-scores{flex-shrink:0;text-align:right;line-height:1.35;}
+  .goal-song-row .g-num{display:block;font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;color:#6b7280;}
+  .goal-song-row .g-need{display:block;color:#c23b3b;font-weight:700;font-variant-numeric:tabular-nums;font-size:11.5px;}
   .goal-check{width:20px;height:20px;border-radius:4px;border:2px solid #e6a7c6;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0;cursor:pointer;transition:.12s;}
   .goal-check:hover{border-color:#5cae3a;background:#eaf6e2;}
   .goal-check.on{background:#5cae3a;border-color:#5cae3a;}
@@ -193,8 +197,6 @@
   <div class="drop" id="drop">
     JSONファイルをここにドロップ、または上の「スコアデータを読込」から選択<br>
     <span style="font-size:11px;">maimaiでらっくすNETで取得したJSON（<code>maimai-player-data_*.json</code>）に対応。ベスト・新曲・候補の4枠を自動で振り分けます</span>
-    <textarea id="paste" placeholder="JSONを直接貼り付けてもOK"></textarea>
-    <button class="primary" id="pasteBtn" style="margin-top:8px;">貼り付けたJSONを読み込む</button>
   </div>
   <p class="status" id="loadStatus"></p>
 
@@ -648,11 +650,6 @@ document.getElementById('loadBtn').addEventListener('click', ()=> document.getEl
 document.getElementById('jsonFile').addEventListener('change', (e)=>{
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader(); r.onload = (ev)=> loadJson(ev.target.result); r.readAsText(f, 'utf-8');
-});
-document.getElementById('pasteBtn').addEventListener('click', ()=>{
-  const v = document.getElementById('paste').value.trim();
-  if(v) loadJson(v);
-  else { loadStatus.textContent = 'JSONを貼り付けてから押してください。'; loadStatus.className = 'status warn'; }
 });
 document.getElementById('loadSampleBtn').addEventListener('click', loadSample);
 const dropEl = document.getElementById('drop');
@@ -1108,7 +1105,7 @@ document.getElementById('goalAddBtn').addEventListener('click', ()=>{
     scope,
     cond: { cMin: isNaN(cMin)?null:cMin, cMax: isNaN(cMax)?null:cMax, diff, kind, rank, score: scoreUnits },
     target,
-    songs: pool.map(s=>({ title:s.title, diff:s.diff, dx:!!s.dx, const:s.const, lv:s.lv })),
+    songs: pool.map(s=>({ title:s.title, diff:s.diff, dx:!!s.dx, const:s.const, lv:s.lv, lamp:s.lamp || '' })),
   };
   GOALS.push(goal);
   saveGoals();
@@ -1163,13 +1160,20 @@ function renderGoals(){
     if(remain === 0){
       songsHtml = `<div class="goal-done-msg">🎉 この目標は全曲達成しました！</div>`;
     }else{
-      songsHtml = `<div class="goal-songs">` + pending.map(r=>`
+      songsHtml = `<div class="goal-songs">` + pending.map(r=>{
+        const constMeta = r.s.const != null ? `<span class="g-const">定数${Number(r.s.const).toFixed(1)}</span>` : '<span class="g-const est">定数?</span>';
+        return `
         <div class="goal-song-row">
           <span class="goal-check" data-check="${goal.id}" data-key="${encodeURIComponent(r.key)}" title="タップでチェック（達成扱いにして一覧から消す）"></span>
-          <span class="g-title">${esc(r.s.title)} <span class="muted">${r.s.diff}${r.s.dx?' DX':' STD'}${r.s.const!=null?' / 定数'+Number(r.s.const).toFixed(1):''}</span></span>
-          <span class="g-num">${(r.cur/10000).toFixed(4)}%</span>
-          <span class="g-need">差分 +${(r.need/10000).toFixed(4)}%</span>
-        </div>`).join('') + `</div>`;
+          <div class="g-main">
+            <div class="g-title">${esc(r.s.title)}</div>
+            <div class="g-meta">${difTag(r.s.diff)}${dxTag(r.s.dx)}${lampTag(r.s.lamp)}<span>/</span>${constMeta}</div>
+          </div>
+          <div class="g-scores">
+            <span class="g-num">${(r.cur/10000).toFixed(4)}%</span>
+            <span class="g-need">+${(r.need/10000).toFixed(4)}%</span>
+          </div>
+        </div>`;}).join('') + `</div>`;
     }
 
     const manualCount = rows.filter(r=> r.manualDone && !r.autoDone).length;
