@@ -1,6 +1,5 @@
 # maimai でらっくす レーティングチェッカー
 
-[CHUNITHM版](../chunithm-score-tool) と同じ構成の maimai でらっくす版です。
 `maimai-rate-table.html` のピンク基調デザインを採用しています。
 
 単一の `index.html` で動作します。ブラウザで開くだけで使えます（サーバー不要）。
