@@ -849,9 +849,9 @@ const COLS_DX = [
   ['定数',            '定数',         'num'],
   ['スコア率',         'スコア率',     'num'],
   ['でらスコア',       'でらスコア',   'num'],
-  ['✦',              '星',           'star'],
   ['次のでらスコア',   '次でらスコア', 'num'],
   ['差分',            '差分',         'gain'],
+  ['✦',              '星',           'star'],
   ['評価',            null,           'eval'],
   ['',                null,           'del']
 ];
@@ -952,9 +952,9 @@ function render(){
           <td class="num">${constCell}</td>
           <td class="num">${r.スコア率.toFixed(2)}%</td>
           <td class="num">${fmtInt(r.でらスコア)}<span class="muted">/${fmtInt(r.でらスコア最大)}</span></td>
-          <td>${diamonds(r.星)}</td>
           <td class="num">${r.maxed ? '<span class="muted">-</span>' : fmtInt(r.次でらスコア)}</td>
           <td class="num gain">${r.maxed ? '<span class="muted">MAX</span>' : '+' + fmtInt(r.差分) + '点'}</td>
+          <td>${diamonds(r.星)}</td>
           <td class="eval-col">${tier}</td>
           <td class="del-col"><button class="del" data-del="${r._idx}">削除</button></td>`;
       }else{
