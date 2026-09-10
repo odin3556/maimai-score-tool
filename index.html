@@ -86,6 +86,9 @@
   tbody td{font-size:12.5px;line-height:1.5;padding:7px 9px;border-bottom:1px solid #f6e6ef;white-space:nowrap;}
   tbody tr:nth-child(even){background:#fffafc;}
 
+  .title-name{display:inline-block;max-width:190px;overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap;vertical-align:middle;}
+
   .num{font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;}
   .rank{font-weight:700;}
   .muted{color:#9aa0ac;}
@@ -875,7 +878,8 @@ function diamonds(star){
   }
   return `<span class="diamond">${s}</span>`;
 }
-function esc(s){ return String(s == null ? '' : s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function titleCell(title){ return `<span class="title-name" title="${esc(title)}">${esc(title)}</span>`; }
 
 function render(){
   const isDx = activeTab === 'でらっくすスコア枠';
@@ -948,7 +952,7 @@ function render(){
       if(isDx){
         tr.innerHTML = `
           <td class="muted">${counter}</td>
-          <td>${esc(r.曲名)} ${difTag(r.diff)}${dxTag(r.dx)}${lampTag(r.lamp)}<br><span class="muted" style="font-size:11px;">${r.lv ? 'Lv.'+esc(r.lv) : ''}</span></td>
+          <td>${titleCell(r.曲名)} ${difTag(r.diff)}${dxTag(r.dx)}${lampTag(r.lamp)}<br><span class="muted" style="font-size:11px;">${r.lv ? 'Lv.'+esc(r.lv) : ''}</span></td>
           <td class="num">${constCell}</td>
           <td class="num">${r.スコア率.toFixed(2)}%</td>
           <td class="num">${fmtInt(r.でらスコア)}<span class="muted">/${fmtInt(r.でらスコア最大)}</span></td>
@@ -960,7 +964,7 @@ function render(){
       }else{
         tr.innerHTML = `
           <td class="muted">${counter}</td>
-          <td>${esc(r.曲名)} ${difTag(r.diff)}${dxTag(r.dx)}${lampTag(r.lamp)}<br><span class="muted" style="font-size:11px;">${r.lv ? 'Lv.'+esc(r.lv) : ''}</span></td>
+          <td>${titleCell(r.曲名)} ${difTag(r.diff)}${dxTag(r.dx)}${lampTag(r.lamp)}<br><span class="muted" style="font-size:11px;">${r.lv ? 'Lv.'+esc(r.lv) : ''}</span></td>
           <td class="num">${constCell}</td>
           <td class="num">${fmtPct(r.スコア)}</td>
           <td class="rank">${r.ランク}</td>
