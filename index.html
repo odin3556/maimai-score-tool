@@ -227,12 +227,22 @@
       <div class="bk-row" id="bkRow"></div>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="rankPanel">
       <label>表示する判定ランクの範囲:
         最低 <select id="rankMin"></select>
         〜 最高 <select id="rankMax"></select>
       </label>
       <span class="status" id="rankFilterStatus" style="margin:0;"></span>
+    </div>
+
+    <div class="panel" id="dxConstPanel" style="display:none;">
+      <label>定数の範囲で絞り込み:
+        <input type="number" step="0.1" id="dxConstMin" class="inp goal-narrow" placeholder="下限">
+        〜
+        <input type="number" step="0.1" id="dxConstMax" class="inp goal-narrow" placeholder="上限">
+      </label>
+      <button type="button" id="dxConstClear">クリア</button>
+      <span class="status" id="dxConstFilterStatus" style="margin:0;"></span>
     </div>
 
     <div class="tabs" id="tabs"></div>
@@ -355,7 +365,8 @@
     ※ 列見出しをクリックすると並び替えられます（評価グループの区切りは維持されます）。各行の「削除」でその曲を今の枠から外せます。データは消えないので「初期状態にリセット」で戻せます。<br>
     ※ 画像として保存する際は、主要列（#・曲名・定数・達成率・判定ランク・次の達成率・次の判定ランク・差分）に絞って出力します。<br>
     ※ 「でらっくすスコア枠」タブは、達成率では見えない精度（でらっくすスコア = CRITICAL PERFECT×3 + PERFECT×2 + GREAT、理論値 = 総ノーツ数×3）の指標です。✦（星）の基準は公式準拠で、達成率 85%〜✦1／90%〜✦2／93%〜✦3／95%〜✦4／97%〜✦5。RATINGには算入されません。<br>
-    ※ 「次のでらスコア」は次の✦ボーダーに到達するのに必要な、でらっくすスコアの絶対値です。でらっくすスコアの記録が無い譜面（未プレイ・データ未取得）はこのタブの対象外です。
+    ※ 「次のでらスコア」は次の✦ボーダーに到達するのに必要な、でらっくすスコアの絶対値です。でらっくすスコアの記録が無い譜面（未プレイ・データ未取得）はこのタブの対象外です。<br>
+    ※ 「でらっくすスコア枠」タブは全プレイ済み譜面が対象で数百譜面になることがあるため、判定ランクの範囲フィルタの代わりに定数の範囲で絞り込めます（定数不明の譜面は範囲指定時は除外されます）。
     <p class="legal">
       当サイトは非公式のファンツールであり、株式会社セガをはじめとする関係者・関係会社とは一切関係ありません。<br>
       スコアデータの取得ブックマークレットおよび譜面定数表は <a href="https://reiwa.f5.si/" target="_blank" rel="noopener noreferrer">音ゲーツール置き場（reiwa.f5.si）</a> のリソースを利用しています。譜面定数は <a href="https://github.com/zvuc/otoge-db" target="_blank" rel="noopener noreferrer">otoge-db</a> 由来です。ご利用の際は各配布元の方針に従ってください。
@@ -666,6 +677,8 @@ async function loadJson(raw){
   sortCol = null; sortDir = 'asc';
   document.getElementById('rankMin').value = 'D';
   document.getElementById('rankMax').value = '理論値';
+  document.getElementById('dxConstMin').value = '';
+  document.getElementById('dxConstMax').value = '';
   activeTab = 'ベスト枠(旧曲)';
 
   const p = norm.profile;
@@ -725,6 +738,8 @@ document.getElementById('resetInitial').addEventListener('click', ()=>{
   sortCol = null; sortDir = 'asc';
   document.getElementById('rankMin').value = 'D';
   document.getElementById('rankMax').value = '理論値';
+  document.getElementById('dxConstMin').value = '';
+  document.getElementById('dxConstMax').value = '';
   loadStatus.textContent = '読み込み直後の初期状態に戻しました。';
   loadStatus.className = 'status ok';
   renderSummary(); render();
@@ -897,8 +912,10 @@ function render(){
     el.addEventListener('click', ()=>{ activeTab = el.dataset.tab; sortCol=null; sortDir='asc'; render(); persistSessionData(); });
   });
 
-  const panelEl = document.querySelector('.panel');
-  if(panelEl) panelEl.style.display = isDx ? 'none' : '';
+  const rankPanelEl = document.getElementById('rankPanel');
+  const dxConstPanelEl = document.getElementById('dxConstPanel');
+  if(rankPanelEl) rankPanelEl.style.display = isDx ? 'none' : '';
+  if(dxConstPanelEl) dxConstPanelEl.style.display = isDx ? '' : 'none';
 
   document.getElementById('thead').innerHTML = '<tr>' + cols.map(([label, key, kind])=>{
     if(!key){ const cls = kind === 'eval' ? 'eval-col' : (kind === 'del' ? 'del-col' : ''); return `<th class="${cls}">${label}</th>`; }
@@ -907,12 +924,26 @@ function render(){
 
   let list = buildRows();
   const total = list.length;
-  if(!isDx){
+  if(isDx){
+    const cMin = parseFloat(document.getElementById('dxConstMin').value);
+    const cMax = parseFloat(document.getElementById('dxConstMax').value);
+    if(!isNaN(cMin) || !isNaN(cMax)){
+      list = list.filter(r => {
+        if(r.定数 == null) return false;
+        if(!isNaN(cMin) && r.定数 < cMin) return false;
+        if(!isNaN(cMax) && r.定数 > cMax) return false;
+        return true;
+      });
+    }
+    document.getElementById('dxConstFilterStatus').textContent = (list.length < total) ? `${total}譜面中${list.length}譜面を表示中` : '';
+    document.getElementById('rankFilterStatus').textContent = '';
+  }else{
     const lo = rankSortValue(document.getElementById('rankMin').value);
     const hi = rankSortValue(document.getElementById('rankMax').value);
     list = list.filter(r => { const v = rankSortValue(r.ランク); return v >= lo && v <= hi; });
+    document.getElementById('rankFilterStatus').textContent = (list.length < total) ? `${total}曲中${list.length}曲を表示中` : '';
+    document.getElementById('dxConstFilterStatus').textContent = '';
   }
-  document.getElementById('rankFilterStatus').textContent = (!isDx && list.length < total) ? `${total}曲中${list.length}曲を表示中` : '';
 
   const groups = new Map();
   list.forEach(r=>{ if(!groups.has(r.tier)) groups.set(r.tier, []); groups.get(r.tier).push(r); });
@@ -1016,6 +1047,15 @@ function render(){
   asc.forEach(([,name])=>{ minSel.appendChild(new Option(name, name)); maxSel.appendChild(new Option(name, name)); });
   minSel.value = 'D'; maxSel.value = '理論値';
   minSel.addEventListener('change', render); maxSel.addEventListener('change', render);
+})();
+
+(function initDxConstFilter(){
+  const minEl = document.getElementById('dxConstMin');
+  const maxEl = document.getElementById('dxConstMax');
+  const clearBtn = document.getElementById('dxConstClear');
+  minEl.addEventListener('input', render);
+  maxEl.addEventListener('input', render);
+  clearBtn.addEventListener('click', ()=>{ minEl.value = ''; maxEl.value = ''; render(); });
 })();
 
 function detectDeviceType(){
