@@ -167,6 +167,7 @@
   .goal-song-row .g-scores{flex-shrink:0;text-align:right;line-height:1.35;}
   .goal-song-row .g-num{display:block;font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;color:#6b7280;}
   .goal-song-row .g-need{display:block;color:#c23b3b;font-weight:700;font-variant-numeric:tabular-nums;font-size:11.5px;}
+  .goal-song-row .g-sub{display:block;font-size:10px;color:#c69bb4;font-variant-numeric:tabular-nums;margin-top:1px;}
   .goal-check{width:20px;height:20px;border-radius:4px;border:2px solid #e6a7c6;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0;cursor:pointer;transition:.12s;}
   .goal-check:hover{border-color:#5cae3a;background:#eaf6e2;}
   .goal-check.on{background:#5cae3a;border-color:#5cae3a;}
@@ -272,6 +273,7 @@
               <option value="新曲枠">新曲枠</option>
               <option value="候補枠(ベスト)">候補枠(ベスト)</option>
               <option value="候補枠(新曲)">候補枠(新曲)</option>
+              <option value="でらっくすスコア枠">でらっくすスコア枠</option>
             </select>
           </label>
           <label>定数 <input type="number" step="0.1" id="goalConstMin" class="inp goal-narrow" placeholder="下限"> 〜 <input type="number" step="0.1" id="goalConstMax" class="inp goal-narrow" placeholder="上限"></label>
@@ -282,7 +284,7 @@
               <option value="EXP">EXP</option><option value="MAS">MAS</option><option value="REM">REM</option>
             </select>
           </label>
-          <label>達成基準
+          <label id="goalKindWrap">達成基準
             <select id="goalKind" class="inp">
               <option value="rank">ランク以上</option>
               <option value="score">達成率以上</option>
@@ -290,9 +292,10 @@
           </label>
           <label id="goalRankWrap">ランク <select id="goalRank" class="inp"></select></label>
           <label id="goalScoreWrap" style="display:none;">達成率(%) <input type="number" step="0.0001" id="goalScore" class="inp" placeholder="100.5"></label>
+          <label id="goalStarWrap" style="display:none;">✦ <select id="goalStar" class="inp"></select>以上</label>
           <button class="primary" id="goalAddBtn">この条件で目標を作成</button>
         </div>
-        <p class="goal-hint" style="margin:8px 0 0;">定数の上限・下限は空欄でもOK（その場合は定数で絞りません）。定数が未確定の曲は、定数範囲を指定するとその条件では対象外になります。</p>
+        <p class="goal-hint" style="margin:8px 0 0;">定数の上限・下限は空欄でもOK（その場合は定数で絞りません）。定数が未確定の曲は、定数範囲を指定するとその条件では対象外になります。対象の枠に「でらっくすスコア枠」を選ぶと、達成基準は「✦以上」になります。</p>
         <p class="status" id="goalStatus"></p>
       </div>
       <div id="goalList"></div>
@@ -1217,11 +1220,27 @@ document.getElementById('goalKind').addEventListener('change', (e)=>{
   document.getElementById('goalRankWrap').style.display = isRank ? '' : 'none';
   document.getElementById('goalScoreWrap').style.display = isRank ? 'none' : '';
 });
+document.getElementById('goalScope').addEventListener('change', (e)=>{
+  const isDxScope = e.target.value === 'でらっくすスコア枠';
+  document.getElementById('goalKindWrap').style.display = isDxScope ? 'none' : '';
+  document.getElementById('goalStarWrap').style.display = isDxScope ? '' : 'none';
+  if(isDxScope){
+    document.getElementById('goalRankWrap').style.display = 'none';
+    document.getElementById('goalScoreWrap').style.display = 'none';
+  }else{
+    document.getElementById('goalKind').dispatchEvent(new Event('change'));
+  }
+});
 
 (function initGoalRank(){
   const sel = document.getElementById('goalRank');
   ['C','B','BB','BBB','A','AA','AAA','S','S+','SS','SS+','SSS','SSS+'].forEach(n=> sel.appendChild(new Option(n, n)));
   sel.value = 'SSS';
+})();
+(function initGoalStar(){
+  const sel = document.getElementById('goalStar');
+  for(let i = 1; i <= MAX_STAR; i++) sel.appendChild(new Option('✦' + i, i));
+  sel.value = String(MAX_STAR);
 })();
 
 function allSongsPool(){ return (DATA && DATA.allSongs) ? DATA.allSongs : []; }
@@ -1238,15 +1257,18 @@ document.getElementById('goalAddBtn').addEventListener('click', ()=>{
     st.className = 'status warn'; return;
   }
   const scope = document.getElementById('goalScope').value;
+  const isDxScope = scope === 'でらっくすスコア枠';
   const cMin = parseFloat(document.getElementById('goalConstMin').value);
   const cMax = parseFloat(document.getElementById('goalConstMax').value);
   const diff = document.getElementById('goalDiff').value;
-  const kind = document.getElementById('goalKind').value;
+  const kind = isDxScope ? 'star' : document.getElementById('goalKind').value;
   const rank = document.getElementById('goalRank').value;
   const scorePct = parseFloat(document.getElementById('goalScore').value);
   const scoreUnits = isNaN(scorePct) ? NaN : Math.round(scorePct * 10000);
-  const target = kind === 'rank' ? rankThreshold(rank) : scoreUnits;
+  const starVal = parseInt(document.getElementById('goalStar').value, 10);
+  const target = kind === 'star' ? starVal : (kind === 'rank' ? rankThreshold(rank) : scoreUnits);
   if(kind === 'score' && (isNaN(scoreUnits))){ st.textContent = '目標の達成率(%)を入力してください。'; st.className='status warn'; return; }
+  if(kind === 'star' && isNaN(starVal)){ st.textContent = '目標の✦を選択してください。'; st.className='status warn'; return; }
 
   const base = scopePool(scope);
   const baseCount = base.length;
@@ -1270,14 +1292,15 @@ document.getElementById('goalAddBtn').addEventListener('click', ()=>{
   if(scope !== 'all') condParts.push(scope);
   if(!isNaN(cMin) || !isNaN(cMax)) condParts.push(`定数${isNaN(cMin)?'':cMin}〜${isNaN(cMax)?'':cMax}`);
   if(diff) condParts.push(diff);
-  condParts.push(kind === 'rank' ? `${rank}以上` : `${scorePct}%以上`);
+  if(kind === 'star') condParts.push(`✦${starVal}以上`);
+  else condParts.push(kind === 'rank' ? `${rank}以上` : `${scorePct}%以上`);
   const autoName = condParts.join(' / ');
 
   const goal = {
     id: Date.now(),
     name: document.getElementById('goalName').value.trim() || autoName,
     scope,
-    cond: { cMin: isNaN(cMin)?null:cMin, cMax: isNaN(cMax)?null:cMax, diff, kind, rank, score: scoreUnits },
+    cond: { cMin: isNaN(cMin)?null:cMin, cMax: isNaN(cMax)?null:cMax, diff, kind, rank, score: scoreUnits, star: isNaN(starVal)?null:starVal },
     target,
     songs: pool.map(s=>({ title:s.title, diff:s.diff, dx:!!s.dx, const:s.const, lv:s.lv, lamp:s.lamp || '' })),
   };
@@ -1297,6 +1320,11 @@ function scoreLookup(){
   allSongsPool().forEach(s=>{ map.set(songKey(s), s.score || 0); });
   return map;
 }
+function dxLookup(){
+  const map = new Map();
+  (DATA.frames['でらっくすスコア枠'] || []).forEach(s=>{ map.set(songKey(s), { score: s.dxScore || 0, max: s.dxMax || 0 }); });
+  return map;
+}
 
 function renderGoals(){
   const host = document.getElementById('goalList');
@@ -1305,13 +1333,25 @@ function renderGoals(){
     return;
   }
   const scores = scoreLookup();
+  const dxScores = dxLookup();
   host.innerHTML = '';
   GOALS.forEach(goal=>{
     if(!goal.checked) goal.checked = {};
+    const isStarGoal = goal.cond.kind === 'star';
     const total = goal.songs.length;
     let done = 0;
     const rows = goal.songs.map(s=>{
       const key = songKey(s);
+      if(isStarGoal){
+        const dx = dxScores.get(key) || { score:0, max:0 };
+        const rate = dx.max > 0 ? (dx.score / dx.max * 100) : 0;
+        const star = starAt(rate);
+        const autoDone = star >= goal.target;
+        const manualDone = !!goal.checked[key];
+        const isDone = autoDone || manualDone;
+        if(isDone) done++;
+        return { s, key, cur: star, curDx: dx, autoDone, manualDone, isDone, need: Math.max(0, goal.target - star) };
+      }
       const cur = scores.get(key) ?? 0;
       const autoDone = cur >= goal.target;
       const manualDone = !!goal.checked[key];
@@ -1326,9 +1366,11 @@ function renderGoals(){
     card.className = 'goal-card' + (remain === 0 ? ' done' : '');
 
     const pending = rows.filter(r=> !r.isDone).sort((a,b)=> a.need - b.need);
-    const targetLabel = goal.cond.kind === 'rank'
-      ? `${goal.cond.rank}以上 (${(goal.target/10000).toFixed(4)}%)`
-      : `${(goal.target/10000).toFixed(4)}%以上`;
+    const targetLabel = isStarGoal
+      ? `✦${goal.target}以上`
+      : (goal.cond.kind === 'rank'
+        ? `${goal.cond.rank}以上 (${(goal.target/10000).toFixed(4)}%)`
+        : `${(goal.target/10000).toFixed(4)}%以上`);
 
     let songsHtml;
     if(remain === 0){
@@ -1336,16 +1378,28 @@ function renderGoals(){
     }else{
       songsHtml = `<div class="goal-songs">` + pending.map(r=>{
         const constMeta = r.s.const != null ? `<span class="g-const">定数${Number(r.s.const).toFixed(1)}</span>` : '<span class="g-const est">定数?</span>';
+        const scoresHtml = isStarGoal
+          ? (()=>{
+              const dx = r.curDx || { score:0, max:0 };
+              const { gap } = nextStarTarget(dx.score, dx.max, r.cur);
+              const nextLine = r.cur >= MAX_STAR
+                ? `${fmtInt(dx.score)}/${fmtInt(dx.max)}　MAX`
+                : `${fmtInt(dx.score)}/${fmtInt(dx.max)}　次✦まで+${fmtInt(gap)}点`;
+              return `<span class="g-num">${diamonds(r.cur)}</span>
+                <span class="g-need">+${r.need}✦</span>
+                <span class="g-sub">${nextLine}</span>`;
+            })()
+          : `<span class="g-num">${(r.cur/10000).toFixed(4)}%</span>
+             <span class="g-need">+${(r.need/10000).toFixed(4)}%</span>`;
         return `
         <div class="goal-song-row">
           <span class="goal-check" data-check="${goal.id}" data-key="${encodeURIComponent(r.key)}" title="タップでチェック（達成扱いにして一覧から消す）"></span>
           <div class="g-main">
             <div class="g-title">${esc(r.s.title)}</div>
-            <div class="g-meta">${difTag(r.s.diff)}${dxTag(r.s.dx)}${lampTag(r.s.lamp)}<span>/</span>${constMeta}</div>
+            <div class="g-meta">${difTag(r.s.diff)}${dxTag(r.s.dx)}${isStarGoal ? '' : lampTag(r.s.lamp)}<span>/</span>${constMeta}</div>
           </div>
           <div class="g-scores">
-            <span class="g-num">${(r.cur/10000).toFixed(4)}%</span>
-            <span class="g-need">+${(r.need/10000).toFixed(4)}%</span>
+            ${scoresHtml}
           </div>
         </div>`;}).join('') + `</div>`;
     }
