@@ -145,39 +145,23 @@
   .goal-form label{display:flex;align-items:center;gap:5px;white-space:nowrap;}
   .goal-narrow{width:64px;}
 
-  .goal-card{background:#fff;border:1px solid #f0c3d8;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
-  .goal-card.done{border-color:#cfe6bf;background:#f6fbf1;}
-  .goal-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
-  .goal-card-title{font-size:15px;font-weight:700;}
-  .goal-card-cond{font-size:11.5px;color:#6b7280;margin-top:2px;}
-  .goal-del{border:none;background:none;color:#c23b3b;cursor:pointer;font-size:12px;}
-  .goal-progress-top{display:flex;align-items:baseline;gap:6px;margin-top:10px;}
-  .goal-remain-num{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;}
-  .goal-total{font-size:14px;color:#c69bb4;font-weight:700;}
-  .goal-pct{margin-left:auto;font-size:13px;color:#c1256b;font-weight:700;}
-  .goal-pct .big{font-size:18px;}
-  .goal-bar-wrap{height:8px;background:#f6e6ef;border-radius:5px;overflow:hidden;margin-top:8px;}
-  .goal-bar{height:100%;background:linear-gradient(90deg,#ff9ec9,#e0407f);border-radius:5px;transition:width .3s;}
-  .goal-sort{margin-top:10px;font-size:11.5px;color:#6b7280;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-  .goal-sort .sort-btn{font-size:11px;padding:3px 9px;border-radius:12px;}
-  .goal-sort .sort-btn.active{background:#e0407f;color:#fff;border-color:#e0407f;}
-  .goal-songs{margin-top:8px;max-height:280px;overflow-y:auto;}
-  .goal-song-row{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid #f6e6ef;font-size:12.5px;}
-  .goal-song-row .g-main{flex:1;min-width:0;}
-  .goal-song-row .g-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;}
-  .goal-song-row .g-meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:3px;font-size:11px;color:#6b7280;}
-  .goal-song-row .g-meta .g-const{font-variant-numeric:tabular-nums;}
-  .goal-song-row .g-scores{flex-shrink:0;text-align:right;line-height:1.35;}
-  .goal-song-row .g-num{display:block;font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;color:#6b7280;}
-  .goal-song-row .g-need{display:block;color:#c23b3b;font-weight:700;font-variant-numeric:tabular-nums;font-size:11.5px;}
-  .goal-song-row .g-sub{display:block;font-size:10px;color:#c69bb4;font-variant-numeric:tabular-nums;margin-top:1px;}
-  .goal-check{width:20px;height:20px;border-radius:4px;border:2px solid #e6a7c6;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0;cursor:pointer;transition:.12s;}
-  .goal-check:hover{border-color:#5cae3a;background:#eaf6e2;}
-  .goal-check.on{background:#5cae3a;border-color:#5cae3a;}
-  .goal-uncheck{border:1px solid #f0c3d8;background:#fff;color:#6b7280;border-radius:6px;font-size:11px;padding:3px 8px;cursor:pointer;}
-  .goal-uncheck:hover{background:#fff0f6;}
-  .goal-done-msg{color:#5cae3a;font-weight:700;font-size:13px;margin-top:10px;}
-  .goal-empty{color:#c69bb4;font-size:13px;text-align:center;padding:30px 0;}
+  /* ---- 目標ページ: 要約・タブ・表（レーティングチェッカーと同じ作り） ---- */
+  .goal-empty{color:#6b7280;font-size:13px;text-align:center;padding:28px 12px;border:1.5px dashed #f0c3d8;border-radius:8px;background:#fff;}
+  .g-sum .rating-val small{font-size:15px;font-weight:700;margin-left:2px;}
+  .g-bar{height:8px;background:#f6e6ef;border-radius:5px;overflow:hidden;margin-top:12px;}
+  .g-bar span{display:block;height:100%;background:linear-gradient(90deg,#ff9ec9,#e0407f);border-radius:5px;}
+  .g-sum-line{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:12px;color:#6b7280;}
+  .g-sum-line b{color:#c1256b;font-size:14px;}
+  .cap{background:#fff;border:1px solid #f0c3d8;border-top:none;border-radius:0 0 8px 8px;overflow-x:auto;}
+  .prac{white-space:nowrap;}
+  .mini-link{display:inline-block;font-size:11px;font-weight:700;line-height:1.4;padding:2px 8px;border-radius:999px;
+    text-decoration:none;border:1px solid currentColor;}
+  .mini-link.yt{color:#d11a1a;}
+  .mini-link.yt:hover{background:#fdecec;}
+  .done-mark{font-size:11px;color:#c1256b;font-weight:700;}
+  .del.undo{color:#6b7280;}
+  .del.mark{color:#c1256b;font-weight:700;}
+  .unplayed{color:#9aa0ac;font-style:italic;}
 
   footer{margin-top:16px;color:#6b7280;font-size:11px;line-height:1.8;}
   footer .legal{margin:14px 0 0;padding-top:12px;border-top:1px solid #f0c3d8;color:#6b7280;}
@@ -266,7 +250,7 @@
     <div id="goalArea">
       <div class="goal-create">
         <h2 class="goal-h2">目標を追加</h2>
-        <p class="goal-hint">条件に合う曲をまとめて目標にできます。達成した曲は自動でリストから消え、達成率が上がります。先に「レーティングチェッカー」でスコアデータを読み込んでおいてください。</p>
+        <p class="goal-hint">条件に合う曲をまとめて目標にできます。届いた曲は表の「🏆 到達済み」に移り、達成率が上がります。先に「レーティングチェッカー」でスコアデータを読み込んでおいてください。</p>
         <div class="goal-form">
           <label>目標名 <input type="text" id="goalName" class="inp" placeholder="例: 新曲枠をSSS"></label>
           <label>対象の枠
@@ -301,7 +285,25 @@
         <p class="goal-hint" style="margin:8px 0 0;">定数の上限・下限は空欄でもOK（その場合は定数で絞りません）。定数が未確定の曲は、定数範囲を指定するとその条件では対象外になります。対象の枠に「でらっくすスコア枠」を選ぶと、達成基準は「✦以上」になります。</p>
         <p class="status" id="goalStatus"></p>
       </div>
-      <div id="goalList"></div>
+
+      <div class="toolbar">
+        <button id="goalSaveImg">画像で保存</button>
+        <button id="goalSaveAllImg">全目標を1枚の画像で保存</button>
+        <button id="goalDelBtn">この目標を削除</button>
+      </div>
+      <div id="goalApp">
+        <div class="summary g-sum" id="goalSummary"></div>
+        <div class="tabs" id="goalTabs"></div>
+        <div class="cap" id="goalCapture">
+          <div class="table-title" id="goalTableTitle"></div>
+          <div class="table-sub" id="goalTableSub"></div>
+          <table>
+            <thead id="goalThead"></thead>
+            <tbody id="goalRows"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="goal-empty" id="goalEmpty" style="display:none;">まだ目標がありません。上のフォームから条件を選んで作ると、ここにレーティングチェッカーと同じ形の表で並びます。</div>
     </div>
   </div><!-- /goalPage -->
 
@@ -372,7 +374,9 @@
     ※ 画像として保存する際は、主要列（#・曲名・定数・達成率・判定ランク・次の達成率・次の判定ランク・差分）に絞って出力します。<br>
     ※ 「でらっくすスコア枠」タブは、達成率では見えない精度（でらっくすスコア = CRITICAL PERFECT×3 + PERFECT×2 + GREAT、理論値 = 総ノーツ数×3）の指標です。✦（星）の基準は公式準拠で、達成率 85%〜✦1／90%〜✦2／93%〜✦3／95%〜✦4／97%〜✦5。RATINGには算入されません。<br>
     ※ 「次のでらスコア」は次の✦ボーダーに到達するのに必要な、でらっくすスコアの絶対値です。でらっくすスコアの記録が無い譜面（未プレイ・データ未取得）はこのタブの対象外です。<br>
-    ※ 「でらっくすスコア枠」タブは全プレイ済み譜面が対象で数百譜面になることがあるため、判定ランクの範囲フィルタの代わりに定数の範囲で絞り込めます（定数不明の譜面は範囲指定時は除外されます）。
+    ※ 「でらっくすスコア枠」タブは全プレイ済み譜面が対象で数百譜面になることがあるため、判定ランクの範囲フィルタの代わりに定数の範囲で絞り込めます（定数不明の譜面は範囲指定時は除外されます）。<br>
+    ※ 目標の表は目標ごとにタブで切り替えます。列見出しをクリックすると並び替えられ（「定数」で定数順、「あと」で目標までの残りの近い順など）、評価グループの区切りは維持されます。「練習」列の「動画」は「maimai 曲名 難易度」（でらっくす譜面は末尾に DX）でYouTubeを検索します。「達成扱い」を押すと、スコアを読み込み直さなくてもその曲を「🏆 到達済み」に移せます（「戻す」で元に戻ります）。<br>
+    ※ ✦の目標の「目標」列は、その譜面のでらっくすスコア理論値に対する✦ボーダー（85% / 90% / 93% / 95% / 97%）を点数にしたものです。
     <p class="legal">
       当サイトは非公式のファンツールであり、株式会社セガをはじめとする関係者・関係会社とは一切関係ありません。<br>
       スコアデータの取得ブックマークレットおよび譜面定数表は <a href="https://reiwa.f5.si/" target="_blank" rel="noopener noreferrer">音ゲーツール置き場（reiwa.f5.si）</a> のリソースを利用しています。譜面定数は <a href="https://github.com/zvuc/otoge-db" target="_blank" rel="noopener noreferrer">otoge-db</a> 由来です。ご利用の際は各配布元の方針に従ってください。
@@ -1163,24 +1167,9 @@ const GOAL_STORE_KEY = 'maimai_goals_v1';
 let GOALS = [];
 try{ GOALS = JSON.parse(localStorage.getItem(GOAL_STORE_KEY) || '[]'); }catch(e){ GOALS = []; }
 function saveGoals(){ try{ localStorage.setItem(GOAL_STORE_KEY, JSON.stringify(GOALS)); }catch(e){} }
-
-// 目標カードごとの曲一覧の並び順（差分順 / 定数の低い順 / 定数の高い順）。ページ内のみ保持。
-const GOAL_SORT = {};
-function sortPendingSongs(pending, mode){
-  const arr = pending.slice();
-  if(mode === 'const_asc' || mode === 'const_desc'){
-    const dir = mode === 'const_asc' ? 1 : -1;
-    arr.sort((a,b)=>{
-      const ac = a.s.const, bc = b.s.const;
-      if(ac == null && bc == null) return 0;
-      if(ac == null) return 1;   // 定数不明は末尾
-      if(bc == null) return -1;
-      return (ac - bc) * dir;
-    });
-    return arr;
-  }
-  arr.sort((a,b)=> a.need - b.need); // 既定: 差分の小さい順
-  return arr;
+function showImagePreview(canvas){
+  document.getElementById('previewImg').src = canvas.toDataURL('image/jpeg', 0.92);
+  document.getElementById('imgModal').classList.add('open');
 }
 
 function rankThreshold(rankName){ const t = RANK_TIERS.find(([,n])=> n === rankName); return t ? t[0] : null; }
@@ -1333,6 +1322,7 @@ document.getElementById('goalAddBtn').addEventListener('click', ()=>{
   if(excludedUnknown > 0) msg += ` ※定数未確定の${excludedUnknown}曲は定数範囲指定のため除外しました。`;
   st.textContent = msg;
   st.className = 'status ok';
+  activeGoalId = goal.id; goalSortCol = null; goalSortDir = 'asc';
   renderGoals();
 });
 
@@ -1342,160 +1332,340 @@ function scoreLookup(){
   allSongsPool().forEach(s=>{ map.set(songKey(s), s.score || 0); });
   return map;
 }
+// 現在のでらっくすスコア。チェッカー側で削除しても進み具合が変わらないよう、読み込み直後のデータも見る
 function dxLookup(){
   const map = new Map();
-  (DATA.frames['でらっくすスコア枠'] || []).forEach(s=>{ map.set(songKey(s), { score: s.dxScore || 0, max: s.dxMax || 0 }); });
+  const add = list => (list || []).forEach(s=>{
+    const k = songKey(s);
+    const prev = map.get(k);
+    if(!prev || (s.dxScore || 0) > prev.score) map.set(k, { score: s.dxScore || 0, max: s.dxMax || 0 });
+  });
+  if(initialSnapshot) add(initialSnapshot.frames['でらっくすスコア枠']);
+  if(DATA) add(DATA.frames['でらっくすスコア枠']);
   return map;
 }
 
-function renderGoals(){
-  const host = document.getElementById('goalList');
-  if(GOALS.length === 0){
-    host.innerHTML = `<div class="goal-empty">まだ目標がありません。上のフォームから条件を指定して作成してください。</div>`;
-    return;
+/* ------------------------------------------------------------
+   目標の進み具合
+   ------------------------------------------------------------ */
+function isStarGoal(goal){ return goal.cond && goal.cond.kind === 'star'; }
+function starPct(star){ const t = STAR_TIERS.find(([s])=> s === star); return t ? t[1] : null; }
+// 目標の曲1件ぶん。✦の目標は譜面ごとに必要なでらっくすスコアが違う
+function goalRowOf(goal, s, scores, dxs){
+  const key = songKey(s);
+  let cur, max = null, target;
+  if(isStarGoal(goal)){
+    const dx = dxs.get(key) || { score:0, max:0 };
+    cur = dx.score; max = dx.max;
+    const pct = starPct(goal.target);
+    target = (max > 0 && pct != null) ? Math.ceil(pct / 100 * max) : null;
+  }else{
+    cur = scores.get(key) ?? 0;
+    target = goal.target;
   }
-  const scores = scoreLookup();
-  const dxScores = dxLookup();
-  host.innerHTML = '';
-  GOALS.forEach(goal=>{
-    if(!goal.checked) goal.checked = {};
-    const isStarGoal = goal.cond.kind === 'star';
-    const total = goal.songs.length;
-    let done = 0;
-    const rows = goal.songs.map(s=>{
-      const key = songKey(s);
-      if(isStarGoal){
-        const dx = dxScores.get(key) || { score:0, max:0 };
-        const rate = dx.max > 0 ? (dx.score / dx.max * 100) : 0;
-        const star = starAt(rate);
-        const autoDone = star >= goal.target;
-        const manualDone = !!goal.checked[key];
-        const isDone = autoDone || manualDone;
-        if(isDone) done++;
-        return { s, key, cur: star, curDx: dx, autoDone, manualDone, isDone, need: Math.max(0, goal.target - star) };
-      }
-      const cur = scores.get(key) ?? 0;
-      const autoDone = cur >= goal.target;
-      const manualDone = !!goal.checked[key];
-      const isDone = autoDone || manualDone;
-      if(isDone) done++;
-      return { s, key, cur, autoDone, manualDone, isDone, need: Math.max(0, goal.target - cur) };
-    });
-    const remain = total - done;
-    const pct = total ? Math.floor(done / total * 1000) / 10 : 0;
-
-    const card = document.createElement('div');
-    card.className = 'goal-card' + (remain === 0 ? ' done' : '');
-
-    const sortMode = GOAL_SORT[goal.id] || 'gap';
-    const pending = sortPendingSongs(rows.filter(r=> !r.isDone), sortMode);
-    const targetLabel = isStarGoal
-      ? `✦${goal.target}以上`
-      : (goal.cond.kind === 'rank'
-        ? `${goal.cond.rank}以上 (${(goal.target/10000).toFixed(4)}%)`
-        : `${(goal.target/10000).toFixed(4)}%以上`);
-
-    let songsHtml;
-    if(remain === 0){
-      songsHtml = `<div class="goal-done-msg">🎉 この目標は全曲達成しました！</div>`;
-    }else{
-      const sortOptions = [['gap','差分の近い順'],['const_asc','定数の低い順'],['const_desc','定数の高い順']];
-      const sortBar = `<div class="goal-sort">並び順:` + sortOptions.map(([mode,label])=>
-        `<button type="button" class="sort-btn${sortMode===mode?' active':''}" data-sort-goal="${goal.id}" data-sort-mode="${mode}">${label}</button>`
-      ).join('') + `</div>`;
-      songsHtml = sortBar + `<div class="goal-songs">` + pending.map(r=>{
-        const constMeta = r.s.const != null ? `<span class="g-const">定数${Number(r.s.const).toFixed(1)}</span>` : '<span class="g-const est">定数?</span>';
-        const scoresHtml = isStarGoal
-          ? (()=>{
-              const dx = r.curDx || { score:0, max:0 };
-              const { gap } = nextStarTarget(dx.score, dx.max, r.cur);
-              const nextLine = r.cur >= MAX_STAR
-                ? `${fmtInt(dx.score)}/${fmtInt(dx.max)}　MAX`
-                : `${fmtInt(dx.score)}/${fmtInt(dx.max)}　次✦まで+${fmtInt(gap)}点`;
-              return `<span class="g-num">${diamonds(r.cur)}</span>
-                <span class="g-need">+${r.need}✦</span>
-                <span class="g-sub">${nextLine}</span>`;
-            })()
-          : `<span class="g-num">${(r.cur/10000).toFixed(4)}%</span>
-             <span class="g-need">+${(r.need/10000).toFixed(4)}%</span>`;
-        return `
-        <div class="goal-song-row">
-          <span class="goal-check" data-check="${goal.id}" data-key="${encodeURIComponent(r.key)}" title="タップでチェック（達成扱いにして一覧から消す）"></span>
-          <div class="g-main">
-            <div class="g-title">${esc(r.s.title)}</div>
-            <div class="g-meta">${difTag(r.s.diff)}${dxTag(r.s.dx)}${isStarGoal ? '' : lampTag(r.s.lamp)}<span>/</span>${constMeta}</div>
-          </div>
-          <div class="g-scores">
-            ${scoresHtml}
-          </div>
-        </div>`;}).join('') + `</div>`;
-    }
-
-    const manualCount = rows.filter(r=> r.manualDone && !r.autoDone).length;
-    const manualNote = manualCount > 0
-      ? `<button class="goal-uncheck" data-uncheck="${goal.id}">手動チェック${manualCount}曲を戻す</button>` : '';
-
-    card.innerHTML = `
-      <div class="goal-card-head">
-        <div>
-          <div class="goal-card-title">${esc(goal.name)}</div>
-          <div class="goal-card-cond">達成基準: ${targetLabel}　対象${total}曲</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          ${manualNote}
-          <button class="goal-del" data-goal-del="${goal.id}">削除</button>
-        </div>
-      </div>
-      <div class="goal-progress-top">
-        <span class="goal-remain-num">${remain}</span>
-        <span class="goal-total">/ ${total}</span>
-        <span class="goal-pct">達成 <span class="big">${pct}%</span></span>
-      </div>
-      <div class="goal-bar-wrap"><div class="goal-bar" style="width:${pct}%"></div></div>
-      ${songsHtml}`;
-    host.appendChild(card);
-  });
-
-  host.querySelectorAll('[data-sort-mode]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      GOAL_SORT[Number(btn.dataset.sortGoal)] = btn.dataset.sortMode;
-      renderGoals();
-    });
-  });
-
-  host.querySelectorAll('[data-check]').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      const id = Number(el.dataset.check);
-      const key = decodeURIComponent(el.dataset.key);
-      const goal = GOALS.find(g=> g.id === id);
-      if(!goal) return;
-      if(!goal.checked) goal.checked = {};
-      goal.checked[key] = true;
-      saveGoals();
-      renderGoals();
-    });
-  });
-
-  host.querySelectorAll('[data-uncheck]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = Number(btn.dataset.uncheck);
-      const goal = GOALS.find(g=> g.id === id);
-      if(!goal) return;
-      goal.checked = {};
-      saveGoals();
-      renderGoals();
-    });
-  });
-
-  host.querySelectorAll('[data-goal-del]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = Number(btn.dataset.goalDel);
-      GOALS = GOALS.filter(g=> g.id !== id);
-      saveGoals();
-      renderGoals();
-    });
-  });
+  const autoDone = target != null && cur > 0 && cur >= target;
+  const manualDone = !!(goal.checked && goal.checked[key]);
+  const need = target == null ? null : Math.max(0, target - cur);
+  return { s, key, cur, max, target, autoDone, manualDone, isDone: autoDone || manualDone, need };
 }
+function computeGoalRows(goal){
+  if(!goal.checked) goal.checked = {};
+  const scores = scoreLookup(), dxs = dxLookup();
+  const rows = goal.songs.map(s=> goalRowOf(goal, s, scores, dxs));
+  const total = rows.length;
+  const done = rows.filter(r=> r.isDone).length;
+  const pct = total ? Math.floor(done / total * 1000) / 10 : 0;
+  const manual = rows.filter(r=> r.manualDone && !r.autoDone).length;
+  return { rows, total, done, remain: total - done, pct, manual };
+}
+// 評価グループ（チェッカーと同じ🔥〜🏆）。目標までの残りで分ける
+function goalTier(goal, r){
+  if(r.isDone) return '🏆 到達済み';
+  if(r.cur === 0 || r.need == null) return '🎯 じっくり育成';
+  if(isStarGoal(goal)) return evaluateStarGap(r.need, false);
+  if(r.need <=  1000) return '🔥 目前！';       // 0.1%以内
+  if(r.need <=  3000) return '💪 あと一歩';     // 0.3%以内
+  if(r.need <=  6000) return '👍 順調';         // 0.6%以内
+  if(r.need <= 15000) return '🌱 伸びしろあり'; // 1.5%以内
+  return '🎯 じっくり育成';
+}
+function goalLineText(goal){
+  const c = goal.cond;
+  let line;
+  if(c.kind === 'star') line = `達成ライン: ✦${goal.target}（でらっくすスコアの${starPct(goal.target)}%以上。必要な点数は譜面ごとに違います）`;
+  else if(c.kind === 'rank') line = `達成ライン: ${c.rank}（達成率${fmtPct(goal.target)}以上）`;
+  else line = `達成ライン: 達成率${fmtPct(goal.target)}以上`;
+  const parts = [];
+  if(c.cMin != null || c.cMax != null) parts.push(`定数${c.cMin ?? ''}〜${c.cMax ?? ''}`);
+  if(c.diff) parts.push(c.diff);
+  return parts.length ? `${line}　条件: ${parts.join(' / ')}` : line;
+}
+const SCOPE_LABEL = s => s === 'all' || !s ? '全曲' : s;
+
+/* ------------------------------------------------------------
+   目標の表（レーティングチェッカーの表と同じ作り）
+   ------------------------------------------------------------ */
+let activeGoalId = null;
+let goalSortCol = null, goalSortDir = 'asc';
+
+const DIFF_FULL_NAME = { BAS:'BASIC', ADV:'ADVANCED', EXP:'EXPERT', MAS:'MASTER', REM:'Re:MASTER' };
+function ytSearchWord(s){ return `maimai ${s.title} ${DIFF_FULL_NAME[s.diff] || s.diff || ''}${s.dx ? ' DX' : ''}`.trim(); }
+function ytUrl(q){ return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q); }
+function practiceLinks(s){
+  const q = ytSearchWord(s);
+  return `<a class="mini-link yt" href="${ytUrl(q)}" target="_blank" rel="noopener" title="YouTubeで「${esc(q)}」を探す">動画</a>`;
+}
+
+function goalCols(goal){
+  const star = isStarGoal(goal);
+  const targetLabel = star ? `目標（✦${goal.target}）` : `目標（${goal.cond.kind === 'rank' ? goal.cond.rank : '達成率'}）`;
+  return [
+    ['#',                       null,    'muted'],
+    ['曲名',                     null,    'title'],
+    ['定数',                     '定数',  'num'],
+    [star ? 'でらスコア' : '達成率', 'スコア', 'num'],
+    [targetLabel,               '目標',  'num'],
+    ['あと',                     'あと',  'num'],
+    star ? ['✦', '星', 'star'] : ['加点', '加点', 'gain'],
+    ['練習',                     null,    'prac'],
+    ['評価',                     null,    'eval'],
+    ['',                         null,    'del'],
+  ];
+}
+function goalRowsData(goal){
+  const st = computeGoalRows(goal);
+  const star = isStarGoal(goal);
+  const rows = st.rows.map((r, i)=>{
+    const c = (r.s.const === undefined || r.s.const === null || r.s.const === '') ? null : Number(r.s.const);
+    const o = Object.assign({}, r, { _i: i, 定数: c, スコア: r.cur, 目標: r.target, あと: r.isDone ? 0 : r.need, tier: goalTier(goal, r) });
+    if(star){
+      o.星 = r.max > 0 ? starAt(r.cur / r.max * 100) : 0;
+    }else{
+      o.加点 = (!r.isDone && c != null && r.cur > 0) ? rateGain(c, r.cur, r.target) : null;
+    }
+    return o;
+  });
+  return { st, rows };
+}
+// 表の中身（見出し行と本体）を作る。画面にも画像にも同じものを使う
+function goalTableHtml(goal, sortCol, sortDir){
+  const COLS = goalCols(goal);
+  const star = isStarGoal(goal);
+  const { rows } = goalRowsData(goal);
+  const thead = '<tr>' + COLS.map(([label, key, kind])=>{
+    if(!key){ const cls = kind === 'eval' ? 'eval-col' : (kind === 'del' ? 'del-col' : (kind === 'prac' ? 'prac-col' : '')); return `<th class="${cls}">${label}</th>`; }
+    const arrow = sortCol === key ? (sortDir === 'asc' ? '▲' : '▼') : '';
+    return `<th class="sortable" data-gsort="${key}">${label}<span class="sort-arrow">${arrow}</span></th>`;
+  }).join('') + '</tr>';
+
+  const groups = new Map();
+  rows.forEach(r=>{ if(!groups.has(r.tier)) groups.set(r.tier, []); groups.get(r.tier).push(r); });
+  const mul = sortDir === 'desc' ? -1 : 1;
+  groups.forEach(arr=>{
+    if(sortCol) arr.sort((a,b)=>{
+      const x = a[sortCol], y = b[sortCol];
+      if(x == null && y == null) return 0;
+      if(x == null) return 1;   // 不明な値は昇順・降順どちらでも末尾
+      if(y == null) return -1;
+      return (x - y) * mul;
+    });
+    else arr.sort((a,b)=> ((a.あと ?? Infinity) - (b.あと ?? Infinity)) || ((b.スコア || 0) - (a.スコア || 0)));
+  });
+
+  const dash = '<span class="muted">-</span>';
+  const unknown = '<span class="est">?</span>';
+  let n = 0, body = '';
+  TIER_ORDER.filter(t => groups.has(t)).forEach(tier=>{
+    const arr = groups.get(tier);
+    body += `<tr class="group-row"><td colspan="${COLS.length}">${tier}<span class="cnt">${arr.length}曲</span></td></tr>`;
+    arr.forEach(r=>{
+      n++;
+      const constCell = r.定数 == null ? unknown :
+        `<span class="${r.s.const_est ? 'est' : ''}">${r.定数.toFixed(1)}${r.s.const_est ? '?' : ''}</span>`;
+      const curCell = !r.cur ? '<span class="unplayed">未プレイ</span>'
+        : (star ? `${fmtInt(r.cur)}<span class="muted">/${fmtInt(r.max)}</span>` : fmtPct(r.cur));
+      const targetCell = r.target == null ? unknown : (star ? fmtInt(r.target) : fmtPct(r.target));
+      const needCell = r.isDone ? dash : (r.need == null ? unknown : (star ? `+${fmtInt(r.need)}点` : fmtPctDelta(r.need)));
+      const lastCell = star
+        ? `<td>${diamonds(r.星)}</td>`
+        : `<td class="num gain">${r.加点 != null && r.加点 > 0 ? '+' + r.加点 : dash}</td>`;
+      const action = r.autoDone ? `<span class="done-mark">達成</span>`
+        : (r.manualDone ? `<button class="del undo" data-uncheck-one="${encodeURIComponent(r.key)}">戻す</button>`
+                        : `<button class="del mark" data-check-one="${encodeURIComponent(r.key)}">達成扱い</button>`);
+      body += `<tr>
+        <td class="muted">${n}</td>
+        <td>${titleCell(r.s.title)} ${difTag(r.s.diff)}${dxTag(r.s.dx)}${lampTag(r.s.lamp)}<br><span class="muted" style="font-size:11px;">${r.s.lv ? 'Lv.' + esc(r.s.lv) : ''}</span></td>
+        <td class="num">${constCell}</td>
+        <td class="num">${curCell}</td>
+        <td class="num">${targetCell}</td>
+        <td class="num">${needCell}</td>
+        ${lastCell}
+        <td class="prac">${practiceLinks(r.s)}</td>
+        <td class="eval-col">${tier}</td>
+        <td class="del-col">${action}</td>
+      </tr>`;
+    });
+  });
+  if(n === 0) body = `<tr><td colspan="${COLS.length}" style="padding:36px;text-align:center;color:#c69bb4;">この目標には曲がありません</td></tr>`;
+  return { thead, body };
+}
+function goalProgressText(st){
+  return `のこり${st.remain}曲（${st.total}曲中 ${st.done}曲達成、${st.pct}%）`;
+}
+function goalSubText(goal){
+  const p = (DATA && DATA.profile) || {};
+  return [p['プレイヤーネーム'], goalLineText(goal), p['取得日時'] ? `スコア取得 ${p['取得日時']}` : ''].filter(Boolean).join('　');
+}
+
+function renderGoals(){
+  const has = GOALS.length > 0;
+  document.getElementById('goalApp').style.display = has ? '' : 'none';
+  document.getElementById('goalEmpty').style.display = has ? 'none' : '';
+  ['goalSaveImg','goalSaveAllImg','goalDelBtn'].forEach(id => document.getElementById(id).disabled = !has);
+  if(!has) return;
+  let goal = GOALS.find(g => g.id === activeGoalId);
+  if(!goal){ goal = GOALS[0]; activeGoalId = goal.id; }
+
+  const st = computeGoalRows(goal);
+  document.getElementById('goalSummary').innerHTML = `
+    <div class="top">
+      <div>
+        <div class="pname">${esc(goal.name)}</div>
+        <div class="pmeta">${esc(goalLineText(goal))}</div>
+      </div>
+      <div class="spacer"></div>
+      <div>
+        <div class="rating-label">のこり</div>
+        <div class="rating-val">${st.remain}<small>曲</small></div>
+      </div>
+    </div>
+    <div class="g-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${st.total}" aria-valuenow="${st.done}"><span style="width:${st.pct}%"></span></div>
+    <div class="g-sum-line">
+      <span>${st.total}曲中 <b>${st.done}</b>曲 達成（${st.pct}%）${st.manual ? `、うち手動で達成扱い ${st.manual}曲` : ''}</span>
+      <span>${esc(SCOPE_LABEL(goal.scope))}から作成</span>
+    </div>`;
+
+  document.getElementById('goalTabs').innerHTML = GOALS.map(g=>{
+    const s = computeGoalRows(g);
+    return `<div class="tab ${g.id === goal.id ? 'active' : ''}" data-goal-tab="${g.id}" role="tab" tabindex="0" aria-selected="${g.id === goal.id}">${esc(g.name)} <span class="count">(のこり${s.remain})</span></div>`;
+  }).join('');
+
+  document.getElementById('goalTableTitle').textContent = `maimai 目標（${goal.name}）`;
+  document.getElementById('goalTableSub').textContent = `${goalProgressText(st)}　${goalSubText(goal)}`;
+  const t = goalTableHtml(goal, goalSortCol, goalSortDir);
+  document.getElementById('goalThead').innerHTML = t.thead;
+  document.getElementById('goalRows').innerHTML = t.body;
+}
+
+// 操作はまとめて受ける
+document.getElementById('goalApp').addEventListener('click', (e)=>{
+  const goal = GOALS.find(g => g.id === activeGoalId);
+  const tab = e.target.closest('[data-goal-tab]');
+  if(tab){ activeGoalId = Number(tab.dataset.goalTab); goalSortCol = null; goalSortDir = 'asc'; document.getElementById('goalStatus').textContent = ''; renderGoals(); return; }
+  const th = e.target.closest('th[data-gsort]');
+  if(th){
+    const col = th.dataset.gsort;
+    if(goalSortCol === col) goalSortDir = goalSortDir === 'asc' ? 'desc' : 'asc';
+    else { goalSortCol = col; goalSortDir = 'asc'; }
+    renderGoals(); return;
+  }
+  const chk = e.target.closest('[data-check-one]');
+  if(chk && goal){
+    if(!goal.checked) goal.checked = {};
+    goal.checked[decodeURIComponent(chk.dataset.checkOne)] = true;
+    saveGoals(); renderGoals(); return;
+  }
+  const un = e.target.closest('[data-uncheck-one]');
+  if(un && goal){
+    delete goal.checked[decodeURIComponent(un.dataset.uncheckOne)];
+    saveGoals(); renderGoals(); return;
+  }
+});
+document.getElementById('goalTabs').addEventListener('keydown', (e)=>{
+  const tab = e.target.closest('[data-goal-tab]');
+  if(tab && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); tab.click(); }
+});
+document.getElementById('goalDelBtn').addEventListener('click', ()=>{
+  const goal = GOALS.find(g => g.id === activeGoalId); if(!goal) return;
+  if(!confirm(`目標「${goal.name}」を削除します。よろしいですか？`)) return;
+  GOALS = GOALS.filter(g => g !== goal); activeGoalId = null;
+  saveGoals(); renderGoals();
+  const st = document.getElementById('goalStatus');
+  st.textContent = `「${goal.name}」を削除しました。`; st.className = 'status ok';
+});
+
+/* ------------------------------------------------------------
+   目標の表の画像（1件 or 全目標を1枚）
+   画面の表を画面外にクローンし、画像に残す列だけにして実寸で描く。
+   ------------------------------------------------------------ */
+const EXPORT_W = 1080;
+const GOAL_IMG_KEEP = ['定数','スコア','目標','あと','加点','星'];
+function pruneTableForImage(table, keepKeys){
+  const clone = table.cloneNode(true);
+  const headCells = Array.from(clone.querySelectorAll('thead th'));
+  const drop = [];
+  headCells.forEach((th, i)=>{
+    const key = th.getAttribute('data-gsort');
+    const fixed = key === null && i <= 1; // # と 曲名
+    if(th.classList.contains('eval-col') || th.classList.contains('del-col') || th.classList.contains('prac-col') || !(fixed || keepKeys.includes(key))) drop.push(i);
+  });
+  drop.sort((a,b)=> b - a);
+  const kept = headCells.length - drop.length;
+  clone.querySelectorAll('.sort-arrow').forEach(a => a.textContent = '');
+  Array.from(clone.querySelectorAll('tr')).forEach(tr=>{
+    const g = tr.querySelector('td[colspan]');
+    if(g){ g.setAttribute('colspan', kept); return; }
+    const cells = Array.from(tr.children);
+    drop.forEach(i => { if(cells[i]) cells[i].remove(); });
+  });
+  clone.querySelectorAll('td').forEach(td=>{ if(td.textContent.trim() === '') td.textContent = '-'; });
+  clone.style.minWidth = '0';
+  return clone;
+}
+// sections: [{ title, sub:[行...], table, keep }]
+async function captureTables(sections){
+  const wrap = document.createElement('div');
+  wrap.style.cssText = `position:fixed;left:-99999px;top:0;background:#ffffff;padding:0 10px 14px;width:max-content;
+    font-family:${getComputedStyle(document.body).fontFamily};`;
+  sections.forEach((sec, i)=>{
+    const head = document.createElement('div');
+    head.style.cssText = `border-top:6px solid #e0407f;margin:${i ? '26px' : '0'} -10px 0;padding:14px 18px 8px;`;
+    head.innerHTML = `
+      <div style="font-size:17px;font-weight:800;color:#c1256b;">${esc(sec.title)}</div>
+      ${(sec.sub || []).map((line, j) => `<div style="font-size:${j === 0 ? '13.5px' : '12px'};${j === 0 ? 'font-weight:700;color:#c1256b;' : 'color:#6b7280;'}margin-top:3px;">${esc(line)}</div>`).join('')}`;
+    wrap.appendChild(head);
+    wrap.appendChild(pruneTableForImage(sec.table, sec.keep));
+  });
+  document.body.appendChild(wrap);
+  const w = wrap.scrollWidth, h = wrap.scrollHeight;
+  try{
+    return await html2canvas(wrap, { backgroundColor:'#ffffff', scale: Math.max(2, EXPORT_W / w), windowWidth: w + 20, width: w, height: h });
+  }finally{ document.body.removeChild(wrap); }
+}
+function goalImageSection(goal, table){
+  const st = computeGoalRows(goal);
+  return { title: `maimai 目標（${goal.name}）`, sub: [goalProgressText(st), goalSubText(goal)], table, keep: GOAL_IMG_KEEP };
+}
+function buildGoalTableEl(goal){
+  const t = goalTableHtml(goal, null, 'asc');
+  const table = document.createElement('table');
+  table.innerHTML = `<thead>${t.thead}</thead><tbody>${t.body}</tbody>`;
+  return table;
+}
+function runExport(btn, fn){
+  const original = btn.textContent;
+  btn.textContent = '画像を作っています…'; btn.disabled = true;
+  Promise.resolve().then(fn).then(c=>{ if(c) showImagePreview(c); })
+    .catch(err=>{ alert('画像を作れませんでした。もう一度お試しください。\n' + err.message); })
+    .finally(()=>{ btn.textContent = original; btn.disabled = false; });
+}
+document.getElementById('goalSaveImg').addEventListener('click', e=>{
+  const goal = GOALS.find(g => g.id === activeGoalId); if(!goal) return;
+  runExport(e.currentTarget, () => captureTables([goalImageSection(goal, document.querySelector('#goalCapture table'))]));
+});
+document.getElementById('goalSaveAllImg').addEventListener('click', e=>{
+  runExport(e.currentTarget, () => captureTables(GOALS.map(g => goalImageSection(g, buildGoalTableEl(g)))));
+});
 
 // 起動時: 定数DBを先読みし、セッション内データがあれば復元、無ければサンプル
 ensureConstDB().catch(()=>{});
