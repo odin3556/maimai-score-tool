@@ -147,8 +147,7 @@
 
   /* ---- 目標ページ: 要約・タブ・表（レーティングチェッカーと同じ作り） ---- */
   .goal-empty{color:#6b7280;font-size:13px;text-align:center;padding:28px 12px;border:1.5px dashed #f0c3d8;border-radius:8px;background:#fff;}
-  .g-sum .rating-val small{font-size:15px;font-weight:700;margin-left:2px;}
-  .g-bar{height:8px;background:#f6e6ef;border-radius:5px;overflow:hidden;margin-top:12px;}
+  .g-bar{height:8px;background:#fbe3ee;border-radius:5px;overflow:hidden;margin-top:8px;}
   .g-bar span{display:block;height:100%;background:linear-gradient(90deg,#ff9ec9,#e0407f);border-radius:5px;}
   .g-sum-line{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:12px;color:#6b7280;}
   .g-sum-line b{color:#c1256b;font-size:14px;}
@@ -158,10 +157,24 @@
     text-decoration:none;border:1px solid currentColor;}
   .mini-link.yt{color:#d11a1a;}
   .mini-link.yt:hover{background:#fdecec;}
-  .done-mark{font-size:11px;color:#c1256b;font-weight:700;}
-  .del.undo{color:#6b7280;}
-  .del.mark{color:#c1256b;font-weight:700;}
   .unplayed{color:#9aa0ac;font-style:italic;}
+  .goal-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .goal-card-title{font-size:18px;font-weight:700;}
+  .goal-card-cond{font-size:11.5px;color:#8a4d6a;margin-top:2px;}
+  .goal-progress-top{display:flex;align-items:baseline;gap:6px;margin-top:10px;}
+  .goal-remain-num{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;color:#c1256b;}
+  .goal-total{font-size:14px;color:#c69bb4;font-weight:700;}
+  .goal-pct{margin-left:auto;font-size:13px;color:#c1256b;font-weight:700;}
+  .goal-pct .big{font-size:18px;}
+  .goal-uncheck{border:1px solid #f0c3d8;background:#fff;color:#8a4d6a;border-radius:6px;font-size:11px;padding:3px 8px;cursor:pointer;white-space:nowrap;}
+  .goal-uncheck:hover{background:#fff0f6;}
+  th.chk-col,td.chk-col{width:30px;padding-left:10px;padding-right:2px;text-align:center;}
+  .goal-check{width:20px;height:20px;border-radius:4px;border:2px solid #e8a9c6;display:inline-flex;align-items:center;
+    justify-content:center;font-size:13px;font-weight:700;color:#fff;cursor:pointer;vertical-align:middle;line-height:1;}
+  .goal-check:hover{border-color:#5cae3a;background:#eaf6e2;}
+  .goal-check.on{background:#5cae3a;border-color:#5cae3a;}
+  .goal-check.on:hover{background:#4a9a2c;border-color:#4a9a2c;}
+  .goal-check.auto{background:#e0407f;border-color:#e0407f;cursor:default;}
 
   footer{margin-top:16px;color:#6b7280;font-size:11px;line-height:1.8;}
   footer .legal{margin:14px 0 0;padding-top:12px;border-top:1px solid #f0c3d8;color:#6b7280;}
@@ -375,7 +388,7 @@
     ※ 「でらっくすスコア枠」タブは、達成率では見えない精度（でらっくすスコア = CRITICAL PERFECT×3 + PERFECT×2 + GREAT、理論値 = 総ノーツ数×3）の指標です。✦（星）の基準は公式準拠で、達成率 85%〜✦1／90%〜✦2／93%〜✦3／95%〜✦4／97%〜✦5。RATINGには算入されません。<br>
     ※ 「次のでらスコア」は次の✦ボーダーに到達するのに必要な、でらっくすスコアの絶対値です。でらっくすスコアの記録が無い譜面（未プレイ・データ未取得）はこのタブの対象外です。<br>
     ※ 「でらっくすスコア枠」タブは全プレイ済み譜面が対象で数百譜面になることがあるため、判定ランクの範囲フィルタの代わりに定数の範囲で絞り込めます（定数不明の譜面は範囲指定時は除外されます）。<br>
-    ※ 目標の表は目標ごとにタブで切り替えます。列見出しをクリックすると並び替えられ（「定数」で定数順、「あと」で目標までの残りの近い順など）、評価グループの区切りは維持されます。「練習」列の「動画」は「maimai 曲名 難易度」（でらっくす譜面は末尾に DX）でYouTubeを検索します。「達成扱い」を押すと、スコアを読み込み直さなくてもその曲を「🏆 到達済み」に移せます（「戻す」で元に戻ります）。<br>
+    ※ 目標の表は目標ごとにタブで切り替えます。列見出しをクリックすると並び替えられ（「定数」で定数順、「あと」で目標までの残りの近い順など）、評価グループの区切りは維持されます。「練習」列の「動画」は「maimai 曲名 難易度」（でらっくす譜面は末尾に DX）でYouTubeを検索します。各行の先頭のチェック欄をタップすると、スコアを読み込み直さなくてもその曲を「🏆 到達済み」に移せます（緑のチェックをもう一度タップで外せます。ピンクのチェックはスコアで達成済みの曲です）。手動チェックをまとめて外すときは、目標の要約にある「手動チェックN曲を戻す」を押してください。手動チェックは目標の側だけに記録され、読み込んだデータは変わりません。<br>
     ※ ✦の目標の「目標」列は、その譜面のでらっくすスコア理論値に対する✦ボーダー（85% / 90% / 93% / 95% / 97%）を点数にしたものです。
     <p class="legal">
       当サイトは非公式のファンツールであり、株式会社セガをはじめとする関係者・関係会社とは一切関係ありません。<br>
@@ -1420,6 +1433,7 @@ function goalCols(goal){
   const star = isStarGoal(goal);
   const targetLabel = star ? `目標（✦${goal.target}）` : `目標（${goal.cond.kind === 'rank' ? goal.cond.rank : '達成率'}）`;
   return [
+    ['',                         null,    'chk'],
     ['#',                       null,    'muted'],
     ['曲名',                     null,    'title'],
     ['定数',                     '定数',  'num'],
@@ -1429,7 +1443,6 @@ function goalCols(goal){
     star ? ['✦', '星', 'star'] : ['加点', '加点', 'gain'],
     ['練習',                     null,    'prac'],
     ['評価',                     null,    'eval'],
-    ['',                         null,    'del'],
   ];
 }
 function goalRowsData(goal){
@@ -1453,7 +1466,11 @@ function goalTableHtml(goal, sortCol, sortDir){
   const star = isStarGoal(goal);
   const { rows } = goalRowsData(goal);
   const thead = '<tr>' + COLS.map(([label, key, kind])=>{
-    if(!key){ const cls = kind === 'eval' ? 'eval-col' : (kind === 'del' ? 'del-col' : (kind === 'prac' ? 'prac-col' : '')); return `<th class="${cls}">${label}</th>`; }
+    if(!key){
+      if(kind === 'muted' || kind === 'title') return `<th data-fixed="1">${label}</th>`;
+      const cls = kind === 'eval' ? 'eval-col' : (kind === 'chk' ? 'chk-col' : (kind === 'prac' ? 'prac-col' : ''));
+      return `<th class="${cls}">${label}</th>`;
+    }
     const arrow = sortCol === key ? (sortDir === 'asc' ? '▲' : '▼') : '';
     return `<th class="sortable" data-gsort="${key}">${label}<span class="sort-arrow">${arrow}</span></th>`;
   }).join('') + '</tr>';
@@ -1489,10 +1506,14 @@ function goalTableHtml(goal, sortCol, sortDir){
       const lastCell = star
         ? `<td>${diamonds(r.星)}</td>`
         : `<td class="num gain">${r.加点 != null && r.加点 > 0 ? '+' + r.加点 : dash}</td>`;
-      const action = r.autoDone ? `<span class="done-mark">達成</span>`
-        : (r.manualDone ? `<button class="del undo" data-uncheck-one="${encodeURIComponent(r.key)}">戻す</button>`
-                        : `<button class="del mark" data-check-one="${encodeURIComponent(r.key)}">達成扱い</button>`);
+      const k = encodeURIComponent(r.key);
+      const check = r.autoDone
+        ? `<span class="goal-check on auto" title="スコアで達成済み">✓</span>`
+        : (r.manualDone
+          ? `<span class="goal-check on" data-uncheck-one="${k}" title="手動チェック済み（タップで外す）">✓</span>`
+          : `<span class="goal-check" data-check-one="${k}" title="タップでチェック（達成扱いにする）"></span>`);
       body += `<tr>
+        <td class="chk-col">${check}</td>
         <td class="muted">${n}</td>
         <td>${titleCell(r.s.title)} ${difTag(r.s.diff)}${dxTag(r.s.dx)}${lampTag(r.s.lamp)}<br><span class="muted" style="font-size:11px;">${r.s.lv ? 'Lv.' + esc(r.s.lv) : ''}</span></td>
         <td class="num">${constCell}</td>
@@ -1502,7 +1523,6 @@ function goalTableHtml(goal, sortCol, sortDir){
         ${lastCell}
         <td class="prac">${practiceLinks(r.s)}</td>
         <td class="eval-col">${tier}</td>
-        <td class="del-col">${action}</td>
       </tr>`;
     });
   });
@@ -1527,21 +1547,24 @@ function renderGoals(){
   if(!goal){ goal = GOALS[0]; activeGoalId = goal.id; }
 
   const st = computeGoalRows(goal);
+  const manualNote = st.manual > 0
+    ? `<button class="goal-uncheck" data-uncheck-all="1">手動チェック${st.manual}曲を戻す</button>` : '';
   document.getElementById('goalSummary').innerHTML = `
-    <div class="top">
+    <div class="goal-card-head">
       <div>
-        <div class="pname">${esc(goal.name)}</div>
-        <div class="pmeta">${esc(goalLineText(goal))}</div>
+        <div class="goal-card-title">${esc(goal.name)}</div>
+        <div class="goal-card-cond">${esc(goalLineText(goal))}　対象${st.total}曲</div>
       </div>
-      <div class="spacer"></div>
-      <div>
-        <div class="rating-label">のこり</div>
-        <div class="rating-val">${st.remain}<small>曲</small></div>
-      </div>
+      ${manualNote}
+    </div>
+    <div class="goal-progress-top">
+      <span class="goal-remain-num">${st.remain}</span>
+      <span class="goal-total">/ ${st.total}</span>
+      <span class="goal-pct">達成 <span class="big">${st.pct}%</span></span>
     </div>
     <div class="g-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${st.total}" aria-valuenow="${st.done}"><span style="width:${st.pct}%"></span></div>
     <div class="g-sum-line">
-      <span>${st.total}曲中 <b>${st.done}</b>曲 達成（${st.pct}%）${st.manual ? `、うち手動で達成扱い ${st.manual}曲` : ''}</span>
+      <span>のこり${st.remain}曲・<b>${st.done}</b>曲 達成${st.manual ? `（うち手動チェック ${st.manual}曲）` : ''}</span>
       <span>${esc(SCOPE_LABEL(goal.scope))}から作成</span>
     </div>`;
 
@@ -1580,6 +1603,10 @@ document.getElementById('goalApp').addEventListener('click', (e)=>{
     delete goal.checked[decodeURIComponent(un.dataset.uncheckOne)];
     saveGoals(); renderGoals(); return;
   }
+  if(e.target.closest('[data-uncheck-all]') && goal){
+    goal.checked = {};
+    saveGoals(); renderGoals(); return;
+  }
 });
 document.getElementById('goalTabs').addEventListener('keydown', (e)=>{
   const tab = e.target.closest('[data-goal-tab]');
@@ -1606,8 +1633,8 @@ function pruneTableForImage(table, keepKeys){
   const drop = [];
   headCells.forEach((th, i)=>{
     const key = th.getAttribute('data-gsort');
-    const fixed = key === null && i <= 1; // # と 曲名
-    if(th.classList.contains('eval-col') || th.classList.contains('del-col') || th.classList.contains('prac-col') || !(fixed || keepKeys.includes(key))) drop.push(i);
+    const fixed = th.hasAttribute('data-fixed'); // # と 曲名
+    if(!(fixed || keepKeys.includes(key))) drop.push(i); // チェック・練習・評価の列は画像に出さない
   });
   drop.sort((a,b)=> b - a);
   const kept = headCells.length - drop.length;
@@ -1630,9 +1657,22 @@ async function captureTables(sections){
   sections.forEach((sec, i)=>{
     const head = document.createElement('div');
     head.style.cssText = `border-top:6px solid #e0407f;margin:${i ? '26px' : '0'} -10px 0;padding:14px 18px 8px;`;
+    const p = sec.progress;
+    const progressHtml = p ? `
+      <div style="display:flex;align-items:baseline;gap:6px;margin-top:10px;">
+        <span style="font-size:13px;font-weight:700;color:#8a4d6a;margin-right:2px;">のこり</span>
+        <span style="font-size:30px;font-weight:800;line-height:1;color:#c1256b;font-variant-numeric:tabular-nums;">${p.remain}</span>
+        <span style="font-size:14px;font-weight:700;color:#c69bb4;">/ ${p.total}</span>
+        <span style="margin-left:auto;font-size:13px;font-weight:700;color:#c1256b;">達成 <span style="font-size:18px;">${p.pct}%</span></span>
+      </div>
+      <div style="height:8px;background:#fbe3ee;border-radius:5px;overflow:hidden;margin-top:8px;">
+        <div style="height:100%;width:${p.pct}%;background:linear-gradient(90deg,#ff9ec9,#e0407f);border-radius:5px;"></div>
+      </div>
+      <div style="font-size:12px;color:#6b7280;margin-top:6px;">${p.total}曲中 <b style="color:#c1256b;">${p.done}</b>曲 達成${p.manual ? `（うち手動チェック ${p.manual}曲）` : ''}</div>` : '';
     head.innerHTML = `
       <div style="font-size:17px;font-weight:800;color:#c1256b;">${esc(sec.title)}</div>
-      ${(sec.sub || []).map((line, j) => `<div style="font-size:${j === 0 ? '13.5px' : '12px'};${j === 0 ? 'font-weight:700;color:#c1256b;' : 'color:#6b7280;'}margin-top:3px;">${esc(line)}</div>`).join('')}`;
+      ${progressHtml}
+      ${(sec.sub || []).map(line => `<div style="font-size:12px;color:#6b7280;margin-top:3px;">${esc(line)}</div>`).join('')}`;
     wrap.appendChild(head);
     wrap.appendChild(pruneTableForImage(sec.table, sec.keep));
   });
@@ -1644,7 +1684,7 @@ async function captureTables(sections){
 }
 function goalImageSection(goal, table){
   const st = computeGoalRows(goal);
-  return { title: `maimai 目標（${goal.name}）`, sub: [goalProgressText(st), goalSubText(goal)], table, keep: GOAL_IMG_KEEP };
+  return { title: `maimai 目標（${goal.name}）`, progress: st, sub: [goalSubText(goal)], table, keep: GOAL_IMG_KEEP };
 }
 function buildGoalTableEl(goal){
   const t = goalTableHtml(goal, null, 'asc');
